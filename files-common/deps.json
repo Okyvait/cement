@@ -6,8 +6,8 @@ deps = {
     "nunit/framework"
   ],
   "edges": [
-    {"certificate-utils/full-build": "bouncycastle.bin/full-build"},
-    {"certificate-utils/full-build": "code-style/full-build"},
-    {"certificate-utils/full-build": "nunit/framework"}
+    ["certificate-utils/full-build", "bouncycastle.bin/full-build"],
+    ["certificate-utils/full-build", "code-style/full-build"],
+    ["certificate-utils/full-build", "nunit/framework"]
   ]
 }

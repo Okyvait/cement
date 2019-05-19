@@ -1,31 +1,25 @@
-console.log(deps)
-// create an array with nodes
-const nodes = new vis.DataSet([
-  { id: 1, label: 'Node 1' },
-  { id: 2, label: 'Node 2' },
-  { id: 3, label: 'Node 3' },
-  { id: 4, label: 'Node 4' },
-  { id: 5, label: 'Node 5' }
-]);
 
-// create an array with edges
-const edges = new vis.DataSet([
-  { from: 1, to: 3 },
-  { from: 1, to: 2 },
-  { from: 2, to: 4 },
-  { from: 2, to: 5 }
-]);
+let uniqueNodes = [...new Set(deps.nodes)];
+const nodeArr = uniqueNodes.map((node, i) => ({ id: i, label: node }));
+const nodes = new vis.DataSet(nodeArr);
 
-// create a network
+const edgeArr = deps.edges.map((edge) => {
+  const [from, to] = edge;
+  const fromNode = nodeArr.find(node => node.label === from);
+  const toNode = nodeArr.find(node => node.label === to);
+  return {
+    from: fromNode && fromNode.id,
+    to: toNode && toNode.id,
+  };
+});
+const edges = new vis.DataSet(edgeArr);
+
 const container = document.getElementById('graph');
-
-// provide the data in the vis format
 const data = {
-  nodes: nodes,
-  edges: edges
+  nodes,
+  edges,
 };
 const options = {};
 
-// initialize your network!
 const network = new vis.Network(container, data, options);
 // network.enableEditMode();
